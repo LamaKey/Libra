@@ -1,0 +1,9 @@
+.card{
+    width:160px;height:140px;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:4px;border:none;
+    background:#ffffff;border-radius:12px;box-shadow:0 1px 2px rgba(0, 0, 0, 0.695);
+  }
+  .value{font-size:32px;font-weight:700;color:var(--color-grey-800);}
+  .label{font-size:14px;color:var(--color-grey-600);}
+  .card:hover{box-shadow:0 2px 6px rgba(0,0,0,.12);cursor:pointer;}
+  

@@ -1,0 +1,85 @@
+.box{
+    position:relative;
+    width:100%;          /* fills parent (label) */
+    font:inherit;
+  }
+  .trigger{
+    width:100%;
+    text-align:left;
+    background:#fff;
+    color:var(--color-grey-800);
+    border:1px solid var(--color-grey-200);
+    border-radius:8px;
+    padding:8px 12px;
+    font:inherit;
+    cursor:pointer;
+    display:flex;
+    justify-content:space-between;
+    gap:8px;
+  }
+  .chev{opacity:.6;}
+  .pop{
+    position:absolute;
+    z-index:20;
+    top:100%;
+    left:0;
+    right:0;
+    margin-top:4px;
+    background:#fff;
+    border:1px solid var(--color-grey-200);
+    border-radius:8px;
+    box-shadow:0 4px 8px rgba(0,0,0,.08);
+    padding:8px;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .pop input{
+    width:100%;
+    padding:6px 8px;
+    border:1px solid var(--color-grey-200);
+    border-radius:6px;
+    font:inherit;
+  }
+  ul{
+    list-style:none;
+    margin:0;
+    max-height:180px;
+    overflow:auto;
+    padding:0;
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+  }
+  li{
+    padding:6px;
+    border-radius:6px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  li:hover{background:var(--color-grey-50);}
+  .empty{color:var(--color-grey-500);text-align:center;}
+  .box{
+    position:relative;
+    width:260px;              /* fixed width to match search box */
+    font:inherit;
+  }
+  .trigger{
+    width:100%;
+    text-align:left;
+    background:#fff;
+    color:var(--color-grey-800);
+    border:1px solid var(--color-grey-200);
+    border-radius:8px;
+    padding:8px 12px;
+    font:inherit;
+    cursor:pointer;
+    display:flex;
+    justify-content:space-between;
+    gap:8px;
+  }
+  .chev{opacity:.6;}
+  /* pop + list unchanged … */
+  

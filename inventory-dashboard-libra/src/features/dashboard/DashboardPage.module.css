@@ -1,0 +1,31 @@
+/* layout */
+.page     { display:flex; flex-direction:column; gap:32px; }
+.summary  { display:flex; gap:16px; }
+.stockRow { display:flex; gap:24px; }
+
+/* summary cards */
+.summaryCard{ flex:1; background:#fff; padding:20px; border-radius:12px;
+              display:flex; flex-direction:column; align-items:center; gap:8px; }
+.sumValue { font-size:24px; font-weight:700; }
+.sumLabel { font-size:13px; color:#666; }
+
+/* stock blocks */
+.block{ flex:1; background:#fff; border-radius:12px; padding:20px; }
+.block header{
+  display:flex; justify-content:space-between; align-items:center;
+  font-weight:600; margin-bottom:12px;
+}
+.block header a{ font-size:13px; text-decoration:none; color:#1976d2; }
+
+/* grid for cards */
+.grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+       gap:12px; }
+.page{ flex:1; display:flex; flex-direction:column; gap:32px; }
+.roomsIcon{ filter: none; } /* Rooms colored SVG kept, just no grey overlay */
+
+.divider{
+    border:0;
+    border-top:1px solid var(--color-grey-100);
+    margin:32px 0;
+}
+    

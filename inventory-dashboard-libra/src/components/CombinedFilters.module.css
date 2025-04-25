@@ -1,0 +1,27 @@
+.wrap { position: relative; }
+
+.wrap button {
+  background: #fff; border: 1px solid #ccc; border-radius: 6px;
+  padding: 6px 12px; cursor: pointer;
+}
+
+.pop {
+  position: absolute; top: 38px; right: 0; min-width: 240px;
+  background: #fff; border: 1px solid #ccc; border-radius: 8px;
+  padding: 12px; display: flex; flex-direction: column; gap: 10px; z-index: 10;
+}
+
+.pop label { font-size: 13px; display: flex; flex-direction: column; gap: 4px; }
+
+/* ---- new clear-button ---- */
+.clearBtn{
+  margin-top: 6px;
+  align-self: flex-end;
+  font: inherit;
+  font-size: 13px;
+  color: var(--color-primary-600);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.clearBtn[disabled]{opacity:.35; cursor: default;}
