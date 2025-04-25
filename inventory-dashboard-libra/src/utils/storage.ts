@@ -143,6 +143,10 @@ export function remove(key: TableKey, id: string) {
     query<Room>("rooms")
       .filter((r) => r.location === id)
       .forEach((r) => remove("rooms", r.id));
+
+    query<Product>("products")
+      .filter((p) => p.location === id)
+      .forEach((p) => remove("products", p.id));
   }
 
   setData(
