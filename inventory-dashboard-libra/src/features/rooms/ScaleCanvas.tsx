@@ -1,65 +1,55 @@
-// src/features/rooms/ScaleCanvas.tsx
 import React from 'react';
-import { Link }                         from 'react-router-dom';
-import {
-  DndContext,
-  useDroppable,
-  useDraggable,
-  DragEndEvent
-} from '@dnd-kit/core';
-import { restrictToParentElement }      from '@dnd-kit/modifiers';
-import { snap, CELL }                  from '../../utils/gridSnap';
-import { query, remove, update }       from '../../utils/storage';
-import { Scale }                       from './types';
-import ScaleTile                       from './ScaleTile';
-import { Product }                     from '../products/types';
+import { DndContext, useDroppable, useDraggable, DragEndEvent } from '@dnd-kit/core';
+import { restrictToParentElement } from '@dnd-kit/modifiers';
+import { snap, CELL } from '../../utils/gridSnap';
+import { query, remove, update } from '../../utils/storage';
+import { Scale } from './types';
+import ScaleTile from './ScaleTile';
+import { Product } from '../products/types';
+import { FiTrash2 } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 
+/** each scale on the canvas */
 function DraggableScale({ scale }: { scale: Scale }) {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: scale.id,
     data: scale
   });
 
-  // find the product for label + link target
-  const prod  = query<Product>('products').find(p => p.id === scale.productId);
-  const label = prod?.name ?? 'Scale';
-
-  // style to position the tile
   const style: React.CSSProperties = {
     position: 'absolute',
-    left:      scale.x,
-    top:       scale.y,
+    left: scale.x,
+    top: scale.y,
     transform: transform
       ? `translate3d(${transform.x}px, ${transform.y}px, 0)`
       : undefined,
     userSelect: 'none'
   };
 
+  const prod = query<Product>('products').find(p => p.id === scale.productId);
+
   // right-click to delete
-  const onContextMenu = (e: React.MouseEvent) => {
+  const onRightClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    if (confirm(`Delete scale for “${label}”?`)) {
+    if (confirm('Delete this scale?')) {
       remove('scales', scale.id);
       window.dispatchEvent(new CustomEvent('scales-changed'));
     }
   };
 
   return (
-    <div style={style} onContextMenu={onContextMenu}>
-      {/* only this inner handle is draggable */}
-      <div ref={setNodeRef} {...listeners} {...attributes}>
-        {/* wrap the tile in a Link just like your products page */}
-        <Link
-          to={`/inventory/${scale.productId}`}
-          style={{ display: 'inline-block', textDecoration: 'none' }}
-        >
-          <ScaleTile
-            label={label}
-            low={!!scale.alerts}
-            imgUrl={prod?.img}
-          />
-        </Link>
-      </div>
+    <div
+      ref={setNodeRef}
+      {...listeners}
+      {...attributes}
+      style={style}
+      onContextMenu={onRightClick}
+    >
+      <ScaleTile
+        label={prod?.name ?? 'Scale'}
+        low={!!scale.alerts}
+        imgUrl={prod?.img}
+        />
     </div>
   );
 }
@@ -82,7 +72,6 @@ export default function ScaleCanvas({ roomId }: { roomId: string }) {
     const newX = snap(s.x + e.delta.x);
     const newY = snap(s.y + e.delta.y);
     update<Scale>('scales', s.id, { x: newX, y: newY });
-    // storage.update will dispatch the “scales-changed” event for us
   };
 
   const { setNodeRef } = useDroppable({ id: 'canvas' });
@@ -93,15 +82,15 @@ export default function ScaleCanvas({ roomId }: { roomId: string }) {
         ref={setNodeRef}
         style={{
           position: 'relative',
-          width:    '78vw',
-          height:   '85vh',
-          backgroundSize:  `${CELL}px ${CELL}px`,
+          width: '78vw',
+          height: '85vh',
+          backgroundSize: `${CELL}px ${CELL}px`,
           backgroundImage:
             'linear-gradient(to right,#eee 1px,transparent 1px),' +
             'linear-gradient(to bottom,#eee 1px,transparent 1px)',
-          border:       '1px solid #ddd',
+          border: '1px solid #ddd',
           borderRadius: 12,
-          overflow:     'hidden'
+          overflow: 'hidden'
         }}
       >
         {scales.map(s => (
