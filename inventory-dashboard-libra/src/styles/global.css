@@ -1,76 +1,75 @@
-/* ------------------------------------------------------------------
-   GLOBAL STYLE SHEET  – fixed 2025-04-23
-   • match SearchSelect height (≈40 px)
-   • force white background for ALL inputs (no more dark modal fields)
-------------------------------------------------------------------- */
+@import "./variables.css";
 
-@import './variables.css';
-
-/* ---------- base ---------- */
-*{box-sizing:border-box;}
-html {background-color: #fff;}
-body{
-  margin:0;
-  font-family:'Inter',sans-serif;
-  background:#fff;
-  color:var(--color-grey-800);
+* {
+  box-sizing: border-box;
+}
+html {
+  background-color: #fff;
+}
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  background: #fff;
+  color: var(--color-grey-800);
   width: 100%;
   height: 100%;
 }
 
-.app-layout{display:flex;min-height:100vh;}
-.page-content{
-  flex:1;                       /* take all remaining width */
-  padding:32px 24px;            /* spare a few more px   */
-  overflow-y:auto;
-  max-width:none;               /* ← was limited by Vite’s starter CSS    */
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+}
+.page-content {
+  flex: 1;
+  padding: 32px 24px;
+  overflow-y: auto;
+  max-width: none;
   background-color: #fff;
   width: 80vw;
 }
 
-/* ---------- unified form controls ---------- */
-input, select, textarea{
-  width:100%;
-  background:#fff !important;           /* ensure white in modals / autofill */
-  color:var(--color-grey-800);
-  border:1px solid var(--color-grey-200);
-  border-radius:8px;
-
-  /* height ≈ 40 px */
-  padding:10px 12px;
-  font:inherit;
-  font-size:14px;
-  line-height:20px;
+input,
+select,
+textarea {
+  width: 100%;
+  background: #fff !important;
+  color: var(--color-grey-800);
+  border: 1px solid var(--color-grey-200);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font: inherit;
+  font-size: 14px;
+  line-height: 20px;
 }
-input:focus, select:focus, textarea:focus{
-  outline:2px solid var(--color-primary-300);
-  border-color:var(--color-primary-400);
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid var(--color-primary-300);
+  border-color: var(--color-primary-400);
 }
-
-/* kill Chrome dark-mode autofill */
 input:-webkit-autofill,
 select:-webkit-autofill,
-textarea:-webkit-autofill{
-  -webkit-box-shadow:0 0 0 1000px #fff inset !important;
-  -webkit-text-fill-color:var(--color-grey-800) !important;
+textarea:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #fff inset !important;
+  -webkit-text-fill-color: var(--color-grey-800) !important;
 }
 
-/* small check-boxes inside SearchSelect */
-input[type=checkbox]{
-  width:14px;
-  height:14px;
-  accent-color:var(--color-primary-600);
+input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  accent-color: var(--color-primary-600);
 }
-
-/* tiny icon buttons (admin simulator) */
-button.small{
-  font:inherit;
-  border:none;
-  background:transparent;
-  cursor:pointer;
+button.small {
+  font: inherit;
+  border: none;
+  background: transparent;
+  cursor: pointer;
 }
-.err{
-  font-size:12px;
-  color:var(--color-error-600);
+.err {
+  font-size: 12px;
+  color: var(--color-error-600);
 }
-.err{font-size:12px;color:var(--color-error-600);}
+.err {
+  font-size: 12px;
+  color: var(--color-error-600);
+}

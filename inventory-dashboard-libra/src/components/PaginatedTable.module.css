@@ -1,20 +1,27 @@
-.table{
-    width:100%;
-    border-collapse:collapse;
-    font-size:14px;
-    table-layout:fixed;           /* forces full-width stretch */
-  }
-  th{
-    background:var(--color-grey-50);
-    text-align:left;
-    padding:12px;
-    color:var(--color-grey-600);
-  }
-  td{
-    padding:12px;
-    border-top:1px solid var(--color-grey-100);
-  }
-  td:first-child{width:60px;}          /* image column for branches/products */
-  .clickable:hover{background:var(--color-grey-50);cursor:pointer;}
-  .empty{text-align:center;color:var(--color-grey-500);}
-  
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  table-layout: fixed;
+}
+th {
+  background: var(--color-grey-50);
+  text-align: left;
+  padding: 12px;
+  color: var(--color-grey-600);
+}
+td {
+  padding: 12px;
+  border-top: 1px solid var(--color-grey-100);
+}
+td:first-child {
+  width: 60px;
+}
+.clickable:hover {
+  background: var(--color-grey-50);
+  cursor: pointer;
+}
+.empty {
+  text-align: center;
+  color: var(--color-grey-500);
+}

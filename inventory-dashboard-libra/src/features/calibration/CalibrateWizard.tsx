@@ -1,30 +1,28 @@
-import React, { useState } from 'react';
-import Modal from '../../components/Modal';
-import SearchSelect, { Option } from '../../components/SearchSelect';
-import { query, update } from '../../utils/storage';
-import { Product } from '../products/types';
-import { sanitizeNumberInput } from '../../utils/sanitizeNumberInput';
+import { useState } from "react";
+import Modal from "../../components/Modal";
+import SearchSelect, { Option } from "../../components/SearchSelect";
+import { query, update } from "../../utils/storage";
+import { Product } from "../products/types";
+import { sanitizeNumberInput } from "../../utils/sanitizeNumberInput";
 
-/* one-off helper so we can re-use the wizard in both contexts */
 export default function CalibrateWizard({
   open,
   onClose,
-  product
+  product,
 }: {
   open: boolean;
   onClose: () => void;
-  /** optional – if omitted user must pick one */
   product?: Product;
 }) {
-  /* ---------- product selection step ---------- */
-  const products = query<Product>('products');
-  const prodOpts: Option[] = products.map((p) => ({ value: p.id, label: p.name }));
-  const [prodId, setProd] = useState(product?.id ?? '');
-
-  /* ---------- calibration step ---------- */
-  const [crateWeight, setCrateWeight] = useState('');
-  const [unitWeight, setUnitWeight] = useState('');
-  const [units, setUnits] = useState('');
+  const products = query<Product>("products");
+  const prodOpts: Option[] = products.map((p) => ({
+    value: p.id,
+    label: p.name,
+  }));
+  const [prodId, setProd] = useState(product?.id ?? "");
+  const [crateWeight, setCrateWeight] = useState("");
+  const [unitWeight, setUnitWeight] = useState("");
+  const [units, setUnits] = useState("");
 
   const chosen = product ?? products.find((p) => p.id === prodId);
 
@@ -39,10 +37,10 @@ export default function CalibrateWizard({
 
   const save = () => {
     if (!chosen) return;
-    update<Product>('products', chosen.id, {
+    update<Product>("products", chosen.id, {
       crateWeight: +crateWeight,
       unitWeight: +unitWeight,
-      unitsPerCrate: +units
+      unitsPerCrate: +units,
     });
     onClose();
   };
@@ -77,29 +75,33 @@ export default function CalibrateWizard({
           <label>
             Empty crate weight (g)*
             <input
-                value={crateWeight}
-                placeholder="e.g. 1050.5"
-                onChange={e => setCrateWeight(sanitizeNumberInput(e.target.value))}
+              value={crateWeight}
+              placeholder="e.g. 1050.5"
+              onChange={(e) =>
+                setCrateWeight(sanitizeNumberInput(e.target.value))
+              }
             />
-            </label>
+          </label>
 
-            <label>
+          <label>
             Single unit weight (g)*
             <input
-                value={unitWeight}
-                placeholder="e.g. 330.25"
-                onChange={e => setUnitWeight(sanitizeNumberInput(e.target.value))}
+              value={unitWeight}
+              placeholder="e.g. 330.25"
+              onChange={(e) =>
+                setUnitWeight(sanitizeNumberInput(e.target.value))
+              }
             />
-            </label>
+          </label>
 
-            <label>
+          <label>
             Max units per crate*
             <input
-                value={units}
-                placeholder="e.g. 24"
-                onChange={e => setUnits(sanitizeNumberInput(e.target.value))}
+              value={units}
+              placeholder="e.g. 24"
+              onChange={(e) => setUnits(sanitizeNumberInput(e.target.value))}
             />
-            </label>
+          </label>
         </>
       )}
     </Modal>

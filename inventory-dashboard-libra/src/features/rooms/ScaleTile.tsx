@@ -1,6 +1,4 @@
-// src/features/rooms/ScaleTile.tsx
-import React from 'react';
-import styles from './ScaleTile.module.css';
+import styles from "./ScaleTile.module.css";
 
 interface Props {
   label: string;

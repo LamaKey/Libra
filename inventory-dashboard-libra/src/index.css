@@ -1,4 +1,6 @@
-html, body, #root {
+html,
+body,
+#root {
   height: 100%;
   margin: 0;
   padding: 0%;
@@ -73,20 +75,23 @@ button:focus-visible {
   }
 }
 :root {
-  /* tweak thumb colour if you want a bit of contrast */
   --thumb-colour: #c4c4c4;
 }
 
-/* Chrome / Safari / Edge */
-::-webkit-scrollbar        { width: 8px; height: 8px; background: #fff; }
-::-webkit-scrollbar-thumb  {
-  background   : var(--thumb-colour);
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background: #fff;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--thumb-colour);
   border-radius: 4px;
 }
-::-webkit-scrollbar-track  { background: #fff; }
+::-webkit-scrollbar-track {
+  background: #fff;
+}
 
-/* Firefox */
 * {
-  scrollbar-width : thin;
-  scrollbar-color : var(--thumb-colour) #ffffff;
+  scrollbar-width: thin;
+  scrollbar-color: var(--thumb-colour) #ffffff;
 }

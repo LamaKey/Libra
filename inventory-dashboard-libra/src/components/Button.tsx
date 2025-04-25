@@ -1,14 +1,14 @@
-import React, { ButtonHTMLAttributes } from 'react';
-import cx from 'classnames';
-import styles from './Button.module.css';
+import { ButtonHTMLAttributes } from "react";
+import cx from "classnames";
+import styles from "./Button.module.css";
 
 type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: 'primary' | 'ghost';
-  size?: 'sm' | 'md';
+  variant?: "primary" | "ghost";
+  size?: "sm" | "md";
 };
 export default function Button({
-  variant = 'primary',
-  size = 'md',
+  variant = "primary",
+  size = "md",
   className,
   ...rest
 }: Props) {

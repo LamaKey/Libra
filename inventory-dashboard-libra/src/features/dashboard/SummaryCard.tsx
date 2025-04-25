@@ -1,23 +1,30 @@
-/* src/features/dashboard/SummaryCard.tsx */
-import { useNavigate } from 'react-router-dom';
-import styles from './SummaryCard.module.css';
+import { useNavigate } from "react-router-dom";
+import styles from "./SummaryCard.module.css";
+import { summaryStyle } from "./DashboardPage";
 
 interface Props {
-  icon : React.ReactNode;
+  icon: string;
   value: number;
   label: string;
-  to?  : string;          // ← optional navigation target
+  to?: string;
+  style?: summaryStyle;
 }
 
-export default function SummaryCard({ icon, value, label, to }: Props) {
+export default function SummaryCard({ icon, value, label, to, style }: Props) {
   const nav = useNavigate();
+  const className =
+    style == summaryStyle.inHand
+      ? styles.inHand
+      : style == summaryStyle.onTheWay
+      ? styles.onTheWay
+      : styles.alerts;
   return (
     <button
-      className={styles.card}
+      className={className}
       onClick={() => to && nav(to)}
       aria-label={`Go to ${label}`}
     >
-      {icon}
+      <img src={icon} />
       <span className={styles.value}>{value}</span>
       <span className={styles.label}>{label}</span>
     </button>

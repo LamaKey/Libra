@@ -1,49 +1,52 @@
-/* ------------------------------------------------------------------
-   AddBranchModal — validates on submit (not while typing)
-------------------------------------------------------------------- */
-
-import React, { useState } from 'react';
-import Modal   from '../../components/Modal';
-import { Branch } from './types';
-import { insert } from '../../utils/storage';
-import { v4 as uuid } from 'uuid';
-import { fileToDataURL } from '../../utils/fileToDataURL';
-import { required } from '../../utils/validators';
+import React, { useEffect, useState } from "react";
+import Modal from "../../components/Modal";
+import { Branch } from "./types";
+import { insert } from "../../utils/storage";
+import { v4 as uuid } from "uuid";
+import { fileToDataURL } from "../../utils/fileToDataURL";
+import { required } from "../../utils/validators";
 
 export default function AddBranchModal({
-  open, onClose
+  open,
+  onClose,
 }: {
   open: boolean;
   onClose: () => void;
 }) {
-  /* form state */
-  const [img,     setImg]     = useState<string>();
-  const [name,    setName]    = useState('');
-  const [address, setAddress] = useState('');
-  const [street,  setStreet]  = useState('');
-  const [contact, setContact] = useState('');
-  const [zip,     setZip]     = useState('');
-
-  /* show errors only after first submit */
+  const [img, setImg] = useState<string>();
+  const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
+  const [street, setStreet] = useState("");
+  const [contact, setContact] = useState("");
+  const [zip, setZip] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
+  useEffect(() => {
+    if (open) {
+      setImg("");
+      setName("");
+      setAddress("");
+      setStreet("");
+      setContact("");
+      setZip("");
+      setSubmitted(false);
+    }
+  }, [open]);
   const pickImg = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.[0]) setImg(await fileToDataURL(e.target.files[0]));
   };
 
-  /* validation helpers */
   const errors = {
-    name   : required(name),
+    name: required(name),
     address: required(address),
-    street : required(street),
-    contact: required(contact)
+    street: required(street),
+    contact: required(contact),
   };
-  const isValid = Object.values(errors).every(e => !e);
+  const isValid = Object.values(errors).every((e) => !e);
 
-  /* submit handler */
   const save = () => {
-    setSubmitted(true);             // turn on error rendering
-    if (!isValid) return;           // keep modal open & show hints
+    setSubmitted(true);
+    if (!isValid) return;
 
     const rec: Branch = {
       id: uuid(),
@@ -52,9 +55,9 @@ export default function AddBranchModal({
       street,
       contact,
       img,
-      zipcode: zip
+      zipcode: zip,
     };
-    insert<Branch>('branches', rec);
+    insert<Branch>("branches", rec);
     onClose();
   };
 
@@ -77,9 +80,11 @@ export default function AddBranchModal({
         <input
           placeholder="Enter branch name"
           value={name}
-          onChange={e => setName(e.target.value)}
+          onChange={(e) => setName(e.target.value)}
         />
-        {submitted && errors.name && <small className="err">{errors.name}</small>}
+        {submitted && errors.name && (
+          <small className="err">{errors.name}</small>
+        )}
       </label>
 
       <label>
@@ -87,9 +92,11 @@ export default function AddBranchModal({
         <input
           placeholder="Address line 1"
           value={address}
-          onChange={e => setAddress(e.target.value)}
+          onChange={(e) => setAddress(e.target.value)}
         />
-        {submitted && errors.address && <small className="err">{errors.address}</small>}
+        {submitted && errors.address && (
+          <small className="err">{errors.address}</small>
+        )}
       </label>
 
       <label>
@@ -97,9 +104,11 @@ export default function AddBranchModal({
         <input
           placeholder="Street / area"
           value={street}
-          onChange={e => setStreet(e.target.value)}
+          onChange={(e) => setStreet(e.target.value)}
         />
-        {submitted && errors.street && <small className="err">{errors.street}</small>}
+        {submitted && errors.street && (
+          <small className="err">{errors.street}</small>
+        )}
       </label>
 
       <label>
@@ -107,9 +116,11 @@ export default function AddBranchModal({
         <input
           placeholder="Phone #"
           value={contact}
-          onChange={e => setContact(e.target.value)}
+          onChange={(e) => setContact(e.target.value)}
         />
-        {submitted && errors.contact && <small className="err">{errors.contact}</small>}
+        {submitted && errors.contact && (
+          <small className="err">{errors.contact}</small>
+        )}
       </label>
 
       <label>
@@ -117,7 +128,7 @@ export default function AddBranchModal({
         <input
           placeholder="Optional"
           value={zip}
-          onChange={e => setZip(e.target.value)}
+          onChange={(e) => setZip(e.target.value)}
         />
       </label>
     </Modal>

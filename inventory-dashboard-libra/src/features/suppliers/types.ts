@@ -4,5 +4,4 @@ export interface Supplier {
   contact: string;
   email: string;
   img?: string;
-  /* product field removed to break circular dependency */
 }

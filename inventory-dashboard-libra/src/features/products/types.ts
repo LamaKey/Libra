@@ -1,23 +1,17 @@
 export interface Product {
-  id   : string;
-  name : string;
+  id: string;
+  name: string;
   price: number;
-
-  /** live stock – kept up-to-date by utils/stock.ts */
-  qty  : number;
-
-  /* calibration data */
-  unitWeight    : number;      // g
-  crateWeight?  : number;      // g
+  qty: number;
+  unitWeight: number;
+  crateWeight?: number;
   unitsPerCrate?: number;
-  threshold?    : number;
-  onTheWay?     : number;
-
-  crateSize?    : string;      // descriptive
-
-  location?: string;           // branch id
+  threshold?: number;
+  onTheWay?: number;
+  crateSize?: string;
+  location?: string;
   img?: string;
-  low : boolean;
+  low: boolean;
   suppliers: string[];
   currency?: string;
 }

@@ -1,22 +1,19 @@
-import React, { useState } from 'react';
-import TableToolbar   from '../../components/TableToolbar';
-import PaginatedTable from '../../components/PaginatedTable';
-import { query, remove } from '../../utils/storage';
-import { Alert } from './types';
-import { Product } from '../products/types';
-import { generateAlertIfNeeded } from '../../utils/alerts';
+import { useState } from "react";
+import TableToolbar from "../../components/TableToolbar";
+import PaginatedTable from "../../components/PaginatedTable";
+import { query, remove } from "../../utils/storage";
+import { Alert } from "./types";
+import { Room } from "../rooms/types";
 
 export default function AlertsPage() {
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
 
-  /* live data, newest first */
-  const alerts = query<Alert>('alerts')
-    .filter(a => a.message.toLowerCase().includes(search.toLowerCase()))
+  const alerts = query<Alert>("alerts")
+    .filter((a) => a.message.toLowerCase().includes(search.toLowerCase()))
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-  /* clear-all helper */
   const clearAll = () => {
-    alerts.forEach(a => remove('alerts', a.id));
+    alerts.forEach((a) => remove("alerts", a.id));
     window.location.reload();
   };
 
@@ -24,7 +21,11 @@ export default function AlertsPage() {
     <>
       <TableToolbar
         title="Alerts"
-        search={{ value: search, onChange: setSearch, placeholder: 'Search alerts' }}
+        search={{
+          value: search,
+          onChange: setSearch,
+          placeholder: "Search alerts",
+        }}
         onAdd={clearAll}
         addLabel="Clear All"
       />
@@ -32,12 +33,22 @@ export default function AlertsPage() {
       <PaginatedTable
         data={alerts}
         cols={[
-          { key: 'message', header: 'Alerts' },
           {
-            key: 'date',
-            header: 'Date',
-            render: (a) => new Date((a as Alert).date).toLocaleString()
-          }
+            key: "room",
+            header: "Room",
+            render: (a) => {
+              const room = query<Room>("rooms").find(
+                (r) => r.id === (a as Alert).roomId
+              );
+              return room?.name ?? "—";
+            },
+          },
+          { key: "message", header: "Alert" },
+          {
+            key: "date",
+            header: "Date",
+            render: (a) => new Date((a as Alert).date).toLocaleString(),
+          },
         ]}
       />
     </>

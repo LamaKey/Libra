@@ -1,43 +1,46 @@
-// src/features/products/EditProductModal.tsx
-import React, { useState } from 'react';
-import Modal from '../../components/Modal';
-import SearchSelect, { Option } from '../../components/SearchSelect';
-import { query, update } from '../../utils/storage';
-import { fileToDataURL } from '../../utils/fileToDataURL';
-import { required, positiveNumber } from '../../utils/validators';
-import { Product } from './types';
-import { Supplier } from '../suppliers/types';
-import { branchOptions } from '../../utils/branchOptions';
+import React, { useState } from "react";
+import Modal from "../../components/Modal";
+import SearchSelect, { Option } from "../../components/SearchSelect";
+import { query, remove, update } from "../../utils/storage";
+import { fileToDataURL } from "../../utils/fileToDataURL";
+import { required, positiveNumber } from "../../utils/validators";
+import { Product } from "./types";
+import { Supplier } from "../suppliers/types";
+import { branchOptions } from "../../utils/branchOptions";
+import { Scale } from "../rooms/types";
 
 export default function EditProductModal({
   open,
   onClose,
-  product
+  product,
 }: {
   open: boolean;
   onClose: () => void;
   product: Product;
 }) {
-  const supplierOpts: Option[] = query<Supplier>('suppliers').map(s => ({
+  const supplierOpts: Option[] = query<Supplier>("suppliers").map((s) => ({
     value: s.id,
-    label: s.name
+    label: s.name,
   }));
 
   const branchOpts: Option[] = branchOptions();
+  const scales = query<Scale>("scales").filter(
+    (s) => s.productId == product.id
+  );
 
   const [state, setState] = useState<Product>({ ...product });
   const [submitted, setSubmitted] = useState(false);
 
   const errors = {
     name: required(state.name),
-    price: positiveNumber(state.price.toString())
+    price: positiveNumber(state.price.toString()),
   };
-  const isValid = Object.values(errors).every(e => !e);
+  const isValid = Object.values(errors).every((e) => !e);
 
   const currencyOpts: Option[] = [
-    { value: 'USD', label: 'USD' },
-    { value: 'EUR', label: 'EUR' },
-    { value: 'GBP', label: 'GBP' }
+    { value: "USD", label: "USD" },
+    { value: "EUR", label: "EUR" },
+    { value: "GBP", label: "GBP" },
   ];
 
   const pickImg = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,7 +56,11 @@ export default function EditProductModal({
   const save = () => {
     setSubmitted(true);
     if (!isValid) return;
-    update<Product>('products', product.id, state);
+    if (product.location != state.location) {
+      scales.forEach((s) => remove("scales", s?.id ?? ""));
+      window.dispatchEvent(new CustomEvent("scales-changed"));
+    }
+    update<Product>("products", product.id, state);
     onClose();
   };
 
@@ -72,21 +79,25 @@ export default function EditProductModal({
 
       <label>
         Name*
-        <input value={state.name} onChange={change('name')} />
-        {submitted && errors.name && <small className="err">{errors.name}</small>}
+        <input value={state.name} onChange={change("name")} />
+        {submitted && errors.name && (
+          <small className="err">{errors.name}</small>
+        )}
       </label>
 
       <label>
         Price*
-        <input value={state.price} onChange={change('price')} />
-        {submitted && errors.price && <small className="err">{errors.price}</small>}
+        <input value={state.price} onChange={change("price")} />
+        {submitted && errors.price && (
+          <small className="err">{errors.price}</small>
+        )}
       </label>
 
       <label>
         Location
         <SearchSelect
-          value={state.location ?? ''}
-          onChange={v => setState({ ...state, location: v })}
+          value={state.location ?? ""}
+          onChange={(v: string) => setState({ ...state, location: v })}
           options={branchOpts}
           placeholder="Select branch"
         />
@@ -105,15 +116,15 @@ export default function EditProductModal({
       <label>
         Currency
         <SearchSelect
-          value={state.currency ?? 'USD'}
+          value={state.currency ?? "USD"}
           onChange={(v: string) => setState({ ...state, currency: v })}
           options={currencyOpts}
         />
       </label>
 
-      <p style={{ fontSize: 13, color: '#666', marginTop: 24 }}>
-        Stock is calculated from scale readings.&nbsp;
-        Use <strong>Calibrate</strong> to update weight parameters.
+      <p style={{ fontSize: 13, color: "#666", marginTop: 24 }}>
+        Stock is calculated from scale readings.&nbsp; Use{" "}
+        <strong>Calibrate</strong> to update weight parameters.
       </p>
     </Modal>
   );
