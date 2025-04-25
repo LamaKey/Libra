@@ -31,7 +31,7 @@ export function unitsOnScale(scale: Scale, prod: Product): number {
   
     // 5) how many additional units in that partial crate?
     const extraUnits = unitsWeight > 0
-      ? Math.floor(unitsWeight / prod.unitWeight)
+      ? Math.ceil(unitsWeight / prod.unitWeight)
       : 0;
   
     // 6) total units = full crates × max units plus any extras

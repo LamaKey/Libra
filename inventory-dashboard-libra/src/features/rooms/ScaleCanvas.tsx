@@ -82,8 +82,8 @@ export default function ScaleCanvas({ roomId }: { roomId: string }) {
         ref={setNodeRef}
         style={{
           position: 'relative',
-          width: '78vw',
-          height: '85vh',
+          width: '100%',
+          height: '94%',
           backgroundSize: `${CELL}px ${CELL}px`,
           backgroundImage:
             'linear-gradient(to right,#eee 1px,transparent 1px),' +

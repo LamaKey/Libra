@@ -25,9 +25,7 @@ export default function ScaleSimulationPage() {
 
   /* ---------- update ---------- */
   const setWeight = (sc: Scale, raw: string) => {
-    const cleaned = sanitizeNumberInput(raw);
-    const w       = +cleaned;
-    update('scales', sc.id, { currentWeight: cleaned === '' ? undefined : w });
+    update('scales', sc.id, { currentWeight: raw });
     recomputeProductQty(sc.productId);
     ping(x => x + 1);                            // refresh table *without* remount
   };
